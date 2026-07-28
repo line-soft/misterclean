@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mister Clean — Higienização e Impermeabilização no Rio de Janeiro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B2027;
+    --ink-2:#123138;
+    --paper:#F5F9F7;
+    --paper-2:#EAF1EE;
+    --aqua:#1FAF9B;
+    --aqua-dark:#158577;
+    --stain:#9C7A52;
+    --stain-dark:#6E5738;
+    --sun:#FFB648;
+    --line:rgba(11,32,39,0.12);
+    --text-soft:#3E5457;
+    --radius:22px;
+    --wrap:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Bricolage Grotesque',sans-serif;
+    margin:0;
+    line-height:1.02;
+    letter-spacing:-0.02em;
+  }
+  p{margin:0;color:var(--text-soft);}
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:var(--wrap); margin:0 auto; padding:0 28px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--aqua-dark);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--aqua);
+    flex:none;
+  }
+  img,svg{display:block;}
+  button{font:inherit;}
+
+  :focus-visible{outline:3px solid var(--sun); outline-offset:3px;}
+
+  /* BUTTONS */
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:14px 24px;
+    border-radius:100px;
+    font-weight:600;
+    font-size:15px;
+    border:1.5px solid transparent;
+    cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{ background:var(--aqua); color:#04211D; box-shadow:0 10px 24px -8px rgba(31,175,155,.55);}
+  .btn-primary:hover{background:var(--aqua-dark); color:#EFFFFB;}
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--ink);}
+  .btn-dark{ background:var(--paper); color:var(--ink);}
+  .btn-dark:hover{background:var(--aqua); color:#04211D;}
+
+  /* HEADER */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,249,247,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid transparent;
+    transition:border-color .25s ease, background .25s ease;
+  }
+  header.solid{border-color:var(--line);}
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0;
+  }
+  .logo{
+    display:flex; align-items:center; gap:9px;
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:500;
+    font-size:15px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .logo .drop{width:14px;height:14px;}
+  .navlinks{display:flex; gap:34px; align-items:center;}
+  .navlinks a{
+    font-size:14.5px; color:var(--text-soft); font-weight:500;
+    transition:color .15s ease;
+  }
+  .navlinks a:hover{color:var(--ink);}
+  .navcta{display:flex; align-items:center; gap:22px;}
+  @media (max-width:860px){
+    .navlinks{display:none;}
+  }
+
+  /* HERO */
+  .hero{padding:64px 0 96px;}
+  .hero-grid{
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(38px,5.2vw,68px);
+    margin:18px 0 22px;
+    font-weight:700;
+  }
+  .hero h1 em{
+    font-style:normal; color:var(--aqua-dark);
+    background:linear-gradient(180deg, transparent 62%, rgba(31,175,155,.28) 62%);
+  }
+  .hero p.lead{
+    font-size:18px; max-width:46ch; margin-bottom:34px; line-height:1.55;
+  }
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:34px;}
+  .hero-note{
+    display:flex; align-items:center; gap:10px;
+    font-size:13.5px; color:var(--text-soft);
+  }
+  .hero-note svg{flex:none;}
+
+  /* COMPARE COMPONENT */
+  .compare-card{
+    position:relative;
+    border-radius:var(--radius);
+    overflow:hidden;
+    aspect-ratio:4/5;
+    box-shadow:0 30px 60px -30px rgba(11,32,39,.35);
+    border:1px solid var(--line);
+    background:var(--ink);
+  }
+  .compare{position:absolute; inset:0;}
+  .layer{position:absolute; inset:0; overflow:hidden;}
+  .layer-before{
+    background:
+      radial-gradient(120px 90px at 24% 30%, rgba(110,87,56,.55), transparent 70%),
+      radial-gradient(160px 120px at 70% 65%, rgba(110,87,56,.45), transparent 70%),
+      radial-gradient(90px 90px at 55% 20%, rgba(156,122,82,.5), transparent 70%),
+      repeating-linear-gradient(115deg, #4b3a26, #4b3a26 2px, #56432c 2px, #56432c 4px);
+  }
+  .layer-after{
+    background:
+      radial-gradient(140px 140px at 30% 20%, rgba(255,255,255,.18), transparent 60%),
+      repeating-linear-gradient(115deg, #12776a, #12776a 2px, #16887a 2px, #16887a 4px);
+    clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0);
+  }
+  .sparkle{position:absolute; opacity:.9;}
+  .tag{
+    position:absolute; top:16px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px; letter-spacing:.12em;
+    padding:6px 11px; border-radius:100px;
+    background:rgba(11,32,39,.55); color:#fff;
+    backdrop-filter:blur(4px);
+  }
+  .tag-before{left:16px;}
+  .tag-after{right:16px;}
+  .divider{
+    position:absolute; top:0; bottom:0;
+    left:var(--pos,50%);
+    width:2px; background:#fff;
+    transform:translateX(-1px);
+    box-shadow:0 0 0 1px rgba(0,0,0,.15);
+    pointer-events:none;
+  }
+  .handle{
+    position:absolute; top:50%; left:var(--pos,50%);
+    transform:translate(-50%,-50%);
+    width:46px; height:46px; border-radius:50%;
+    background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 20px -6px rgba(0,0,0,.45);
+    pointer-events:none;
+  }
+  .compare-range{
+    position:absolute; inset:0; width:100%; height:100%;
+    margin:0; appearance:none; -webkit-appearance:none;
+    background:transparent; cursor:ew-resize; z-index:5;
+  }
+  .compare-range::-webkit-slider-thumb{-webkit-appearance:none; width:46px; height:46px; opacity:0;}
+  .compare-range::-moz-range-thumb{width:46px; height:46px; opacity:0; border:none;}
+  .drag-hint{
+    position:absolute; bottom:16px; left:50%; transform:translateX(-50%);
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:#fff; opacity:.85;
+    display:flex; align-items:center; gap:8px;
+    pointer-events:none;
+  }
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr; gap:40px;}
+    .compare-card{aspect-ratio:16/11;}
+  }
+
+  /* MARQUEE */
+  .marquee-wrap{
+    background:var(--ink); color:#EFFFFB; padding:20px 0; overflow:hidden;
+  }
+  .marquee-label{
+    text-align:center; font-family:'IBM Plex Mono',monospace; font-size:11.5px;
+    letter-spacing:.14em; text-transform:uppercase; color:#7FD9CB; margin-bottom:14px;
+  }
+  .marquee{ display:flex; width:max-content; gap:0; animation:scroll 32s linear infinite;}
+  .marquee span{
+    font-family:'IBM Plex Mono',monospace; font-size:15px; padding:0 26px;
+    display:flex; align-items:center; gap:26px; white-space:nowrap;
+  }
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  section{padding:96px 0;}
+  .section-head{
+    max-width:640px; margin-bottom:56px;
+  }
+  .section-head h2{
+    font-size:clamp(30px,3.6vw,44px); margin-top:14px; font-weight:700;
+  }
+
+  /* SERVICES */
+  .services-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+    background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+  }
+  .service-card{
+    background:var(--paper); padding:34px 28px; min-height:220px;
+    display:flex; flex-direction:column; gap:16px;
+    transition:background .2s ease;
+  }
+  .service-card:hover{background:var(--paper-2);}
+  .service-card .icon{
+    width:42px; height:42px; border-radius:12px;
+    background:var(--ink); color:var(--aqua);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .service-card h3{font-size:19px; font-weight:700;}
+  .service-card p{font-size:14.5px; line-height:1.5;}
+  @media (max-width:860px){ .services-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .services-grid{grid-template-columns:1fr;} }
+
+  /* PROCESS */
+  .process{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:28px;
+  }
+  .step{border-top:2px solid var(--ink); padding-top:18px;}
+  .step .num{
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--aqua-dark);
+  }
+  .step h3{font-size:19px; margin:10px 0 8px; font-weight:700;}
+  .step p{font-size:14.5px; line-height:1.5;}
+  @media (max-width:860px){ .process{grid-template-columns:1fr 1fr; row-gap:36px;} }
+  @media (max-width:560px){ .process{grid-template-columns:1fr;} }
+
+  /* GALLERY */
+  .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .gallery .compare-card{aspect-ratio:3/4;}
+  .gallery figcaption{
+    margin-top:12px; display:flex; justify-content:space-between; align-items:baseline;
+    font-size:14px;
+  }
+  .gallery figcaption .mono{font-size:11.5px; color:var(--aqua-dark);}
+  .auto .layer-after{ animation:wipe 5s ease-in-out infinite; }
+  .auto:nth-of-type(2) .layer-after{animation-delay:.6s;}
+  .auto:nth-of-type(3) .layer-after{animation-delay:1.2s;}
+  @keyframes wipe{
+    0%{clip-path:inset(0 100% 0 0);}
+    45%{clip-path:inset(0 8% 0 0);}
+    75%{clip-path:inset(0 8% 0 0);}
+    100%{clip-path:inset(0 100% 0 0);}
+  }
+  @media (max-width:860px){ .gallery{grid-template-columns:1fr;} }
+
+  /* DIFERENCIAIS */
+  .diff-wrap{
+    background:var(--ink); border-radius:32px; padding:64px 56px; color:#EFFFFB;
+    display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;
+  }
+  .diff-wrap .section-head h2{color:#fff;}
+  .diff-wrap .eyebrow{color:#7FD9CB;}
+  .diff-wrap .eyebrow::before{background:var(--aqua);}
+  .diff-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:22px;}
+  .diff-list li{display:flex; gap:16px; align-items:flex-start; font-size:16px; line-height:1.5;}
+  .diff-list li svg{flex:none; margin-top:2px;}
+  .diff-list li b{display:block; margin-bottom:2px; font-family:'Bricolage Grotesque',sans-serif; font-size:17px;}
+  .diff-list li span{color:#A9C4C1; font-size:14.5px;}
+  @media (max-width:860px){ .diff-wrap{grid-template-columns:1fr; padding:44px 28px;} }
+
+  /* CONTACT */
+  .contact{
+    background:var(--paper-2); border-radius:32px; padding:72px 56px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:26px;
+  }
+  .contact h2{font-size:clamp(32px,4.4vw,54px); max-width:16ch;}
+  .contact p{font-size:17px; max-width:48ch;}
+  .contact .phone{
+    font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--ink);
+    display:flex; align-items:center; gap:10px;
+  }
+  @media (max-width:640px){ .contact{padding:48px 24px;} }
+
+  /* FOOTER */
+  footer{padding:56px 0 40px; border-top:1px solid var(--line);}
+  .footer-grid{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;
+  }
+  .footer-links{display:flex; gap:26px; flex-wrap:wrap;}
+  .footer-links a{font-size:14px; color:var(--text-soft);}
+  .footer-links a:hover{color:var(--ink);}
+  .footer-bottom{
+    margin-top:30px; padding-top:24px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:12.5px; color:var(--text-soft); font-family:'IBM Plex Mono',monospace;
+  }
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="wrap nav">
+    <a href="#top" class="logo">
+      <svg class="drop" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14Z" fill="#1FAF9B"/></svg>
+      Mister Clean
+    </a>
+    <nav class="navlinks">
+      <a href="#servicos">Serviços</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#area">Área de atendimento</a>
+    </nav>
+    <div class="navcta">
+      <a class="btn btn-primary" href="https://wa.me/5521965604594" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0 0 12.04 2Zm5.8 14.13c-.24.68-1.4 1.33-1.93 1.4-.5.08-1.11.11-1.79-.11-.41-.13-.94-.3-1.62-.6-2.85-1.23-4.7-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94 0-1.4.73-2.08 1-2.36.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.37-.23.62-.14.26.09 1.62.77 1.9.91.28.14.46.21.53.33.07.12.07.68-.17 1.36Z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" style="padding-top:56px;">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Higienização · Impermeabilização · Rio de Janeiro</span>
+        <h1>Sujou, o <em>Mister&nbsp;Clean</em> resolve.</h1>
+        <p class="lead">Estofados, colchões, tapetes e cortinas com aparência e cheiro de novo — direto na sua casa, sem tirar o sofá do lugar.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="https://wa.me/5521965604594" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+          <a class="btn btn-ghost" href="#servicos">Ver serviços</a>
+        </div>
+        <div class="hero-note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14Z" fill="#1FAF9B"/></svg>
+          Atendemos toda a região do Rio de Janeiro
+        </div>
+      </div>
+
+      <div>
+        <div class="compare-card" id="hero-compare">
+          <div class="compare">
+
+    <div class="layer layer-before">
+        <img src="2.png" alt="Antes da limpeza">
+    </div>
+
+    <div class="layer layer-after">
+        <img src="1.png" alt="Depois da limpeza">
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="handle">
+        <svg width="18" height="18" viewBox="0 0 24 24">
+            <path d="M8 6 3 12l5 6M16 6l5 6-5 6"
+                  stroke="#0B2027"
+                  stroke-width="2"
+                  fill="none"/>
+        </svg>
+    </div>
+
+    <span class="tag tag-before">ANTES</span>
+    <span class="tag tag-after">DEPOIS</span>
+
+</div>
+          <input class="compare-range" type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois da higienização" oninput="this.closest('.compare-card').style.setProperty('--pos', this.value+'%')">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-label">Atendemos toda a Grande Rio</div>
+    <div class="marquee" aria-hidden="true">
+      <span>
+        <span>Barra da Tijuca</span><span>·</span>
+        <span>Recreio dos Bandeirantes</span><span>·</span>
+        <span>Jacarepaguá</span><span>·</span>
+        <span>Zona Sul</span><span>·</span>
+        <span>Tijuca</span><span>·</span>
+        <span>Niterói</span><span>·</span>
+        <span>Zona Norte</span><span>·</span>
+        <span>Baixada Fluminense</span><span>·</span>
+      </span>
+      <span>
+        <span>Barra da Tijuca</span><span>·</span>
+        <span>Recreio dos Bandeirantes</span><span>·</span>
+        <span>Jacarepaguá</span><span>·</span>
+        <span>Zona Sul</span><span>·</span>
+        <span>Tijuca</span><span>·</span>
+        <span>Niterói</span><span>·</span>
+        <span>Zona Norte</span><span>·</span>
+        <span>Baixada Fluminense</span><span>·</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="servicos">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">O que fazemos</span>
+        <h2>Um serviço para cada tipo de sujeira.</h2>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 12v5h16v-5M4 12a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2M6 10V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Estofados</h3>
+          <p>Sofás, poltronas e cadeiras: higienização profunda que remove manchas, ácaros e odor sem encharcar o tecido.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="9" width="18" height="9" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 13h18" stroke="currentColor" stroke-width="1.6"/></svg></div>
+          <h3>Colchões</h3>
+          <p>Limpeza especializada contra ácaros, fungos e manchas, com processo de secagem rápida.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="1" stroke="currentColor" stroke-width="1.6"/><path d="M7 4v16M17 4v16M3 8h18M3 16h18" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          <h3>Tapetes e carpetes</h3>
+          <p>Lavagem e higienização que devolvem cor, maciez e textura original da peça.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h9l7 7v9H4V4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 9h9M4 14h9M4 19h9" stroke="currentColor" stroke-width="1.2"/></svg></div>
+          <h3>Cortinas</h3>
+          <p>Limpeza feita no local, sem precisar desmontar ou tirar a peça de casa.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+          <h3>Impermeabilização</h3>
+          <p>Proteção que repele líquidos, evita manchas futuras e prolonga a vida do tecido.</p>
+        </div>
+
+        <div class="service-card" style="background:var(--ink); color:#EFFFFB;">
+          <div class="icon" style="background:var(--aqua); color:#04211D;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3 style="color:#fff;">Não achou o seu caso?</h3>
+          <p style="color:#A9C4C1;">Manda uma foto no WhatsApp e a gente diz se dá pra resolver.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="como-funciona" style="background:var(--paper-2);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Como funciona</span>
+        <h2>Do chamado à entrega, em quatro passos.</h2>
+      </div>
+      <div class="process">
+        <div class="step">
+          <span class="num mono">01</span>
+          <h3>Chamado</h3>
+          <p>Você manda uma mensagem no WhatsApp e conta o que precisa higienizar.</p>
+        </div>
+        <div class="step">
+          <span class="num mono">02</span>
+          <h3>Orçamento</h3>
+          <p>Avaliamos por fotos ou visitamos o local e passamos o valor, sem compromisso.</p>
+        </div>
+        <div class="step">
+          <span class="num mono">03</span>
+          <h3>Higienização</h3>
+          <p>Nossa equipe faz o serviço no seu endereço, com produtos e equipamento próprios.</p>
+        </div>
+        <div class="step">
+          <span class="num mono">04</span>
+          <h3>Entrega</h3>
+          <p>Peça limpa, seca e pronta para uso — geralmente no mesmo dia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="resultados">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Resultados</span>
+        <h2>Resultado que se vê — e se sente.</h2>
+      </div>
+      <div class="gallery">
+        <figure>
+          <div class="compare-card auto">
+            <div class="layer layer-before"></div>
+            <div class="layer layer-after"></div>
+            <span class="tag tag-before">ANTES</span>
+            <span class="tag tag-after">DEPOIS</span>
+          </div>
+          <figcaption><span>Sofá de tecido</span><span class="mono">ESTOFADO</span></figcaption>
+        </figure>
+        <figure>
+          <div class="compare-card auto">
+            <div class="layer layer-before"></div>
+            <div class="layer layer-after"></div>
+            <span class="tag tag-before">ANTES</span>
+            <span class="tag tag-after">DEPOIS</span>
+          </div>
+          <figcaption><span>Colchão casal</span><span class="mono">COLCHÃO</span></figcaption>
+        </figure>
+        <figure>
+          <div class="compare-card auto">
+            <div class="layer layer-before"></div>
+            <div class="layer layer-after"></div>
+            <span class="tag tag-before">ANTES</span>
+            <span class="tag tag-after">DEPOIS</span>
+          </div>
+          <figcaption><span>Tapete de sala</span><span class="mono">TAPETE</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section id="area">
+    <div class="wrap">
+      <div class="diff-wrap">
+        <div>
+          <span class="eyebrow">Por que o Mister Clean</span>
+          <h2 style="font-size:clamp(28px,3.4vw,40px); margin-top:14px;">Feito para resolver de verdade — não só disfarçar.</h2>
+        </div>
+        <ul class="diff-list">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#1FAF9B"/><path d="M8 12.5l2.5 2.5L16 9" stroke="#04211D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><b>Toda a região do Rio de Janeiro</b><span>Atendimento em domicílio, sem precisar levar nada para fora de casa.</span></div>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#1FAF9B"/><path d="M8 12.5l2.5 2.5L16 9" stroke="#04211D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><b>Orçamento sem compromisso</b><span>Você manda uma foto ou pede uma visita, e decide com calma.</span></div>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#1FAF9B"/><path d="M8 12.5l2.5 2.5L16 9" stroke="#04211D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><b>Produtos próprios</b><span>Sem cheiro forte, seguros para crianças e pets.</span></div>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#1FAF9B"/><path d="M8 12.5l2.5 2.5L16 9" stroke="#04211D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><b>Equipe treinada e pontual</b><span>Chega no horário combinado e cuida da sua casa como se fosse a nossa.</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contato">
+    <div class="wrap">
+      <div class="contact">
+        <span class="eyebrow">Fale com a gente</span>
+        <h2>Vamos deixar isso limpo?</h2>
+        <p>Manda o endereço e uma foto do que precisa higienizar — a gente responde rápido e já passa o orçamento.</p>
+        <a class="btn btn-primary" href="https://wa.me/5521965604594" target="_blank" rel="noopener" style="font-size:16px; padding:16px 28px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0 0 12.04 2Zm5.8 14.13c-.24.68-1.4 1.33-1.93 1.4-.5.08-1.11.11-1.79-.11-.41-.13-.94-.3-1.62-.6-2.85-1.23-4.7-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94 0-1.4.73-2.08 1-2.36.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.28.37-.23.62-.14.26.09 1.62.77 1.9.91.28.14.46.21.53.33.07.12.07.68-.17 1.36Z"/></svg>
+          Chamar agora no WhatsApp
+        </a>
+        <span class="phone">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.98.36 1.94.68 2.86a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.22-1.25a2 2 0 0 1 2.11-.45c.92.32 1.88.55 2.86.68A2 2 0 0 1 22 16.92Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          21 96560-4594
+        </span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <a href="#top" class="logo">
+        <svg class="drop" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 5 11.5 5 16a7 7 0 0 0 14 0c0-4.5-7-14-7-14Z" fill="#1FAF9B"/></svg>
+        Mister Clean
+      </a>
+      <div class="footer-links">
+        <a href="#servicos">Serviços</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#resultados">Resultados</a>
+        <a href="https://instagram.com/misterclean.oficial" target="_blank" rel="noopener">@misterclean.oficial</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 <a href="https://www.instagram.com/automacao_linesoft/">LINE SOFT | Software House</a></span>
+      <span>Rio de Janeiro · RJ</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('solid', window.scrollY > 8);
+  });
+</script>
+
+</body>
+</html>
