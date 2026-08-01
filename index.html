@@ -283,12 +283,20 @@
   .auto .layer-after{ animation:wipe 5s ease-in-out infinite; }
   .auto:nth-of-type(2) .layer-after{animation-delay:.6s;}
   .auto:nth-of-type(3) .layer-after{animation-delay:1.2s;}
-  @keyframes wipe{
-    0%{clip-path:inset(0 100% 0 0);}
-    45%{clip-path:inset(0 8% 0 0);}
-    75%{clip-path:inset(0 8% 0 0);}
-    100%{clip-path:inset(0 100% 0 0);}
-  }
+@keyframes wipe{
+    0%{
+        clip-path: inset(0 100% 0 0);
+    }
+    50%{
+        clip-path: inset(0 0 0 0);
+    }
+    80%{
+        clip-path: inset(0 0 0 0);
+    }
+    100%{
+        clip-path: inset(0 100% 0 0);
+    }
+}
   @media (max-width:860px){ .gallery{grid-template-columns:1fr;} }
 
   /* DIFERENCIAIS */
@@ -332,6 +340,12 @@
     display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
     font-size:12.5px; color:var(--text-soft); font-family:'IBM Plex Mono',monospace;
   }
+  .layer img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
 </style>
 </head>
 <body>
@@ -525,33 +539,54 @@
         <h2>Resultado que se vê — e se sente.</h2>
       </div>
       <div class="gallery">
+<figure>
+  <div class="compare-card auto">
+    <div class="layer layer-before">
+      <img src="1.png" alt="Sofá antes da higienização">
+    </div>
+    <div class="layer layer-after">
+      <img src="2.png" alt="Sofá depois da higienização">
+    </div>
+    <span class="tag tag-before">ANTES</span>
+    <span class="tag tag-after">DEPOIS</span>
+  </div>
+  <figcaption>
+    <span>Sofá de tecido</span>
+    <span class="mono">ESTOFADO</span>
+  </figcaption>
+</figure>
+<figure>
+  <div class="compare-card auto">
+    <div class="layer layer-before">
+      <img src="1.png" alt="Colchão antes da higienização">
+    </div>
+    <div class="layer layer-after">
+      <img src="2.png" alt="Colchão depois da higienização">
+    </div>
+    <span class="tag tag-before">ANTES</span>
+    <span class="tag tag-after">DEPOIS</span>
+  </div>
+  <figcaption>
+    <span>Colchão casal</span>
+    <span class="mono">COLCHÃO</span>
+  </figcaption>
+</figure>
         <figure>
-          <div class="compare-card auto">
-            <div class="layer layer-before"></div>
-            <div class="layer layer-after"></div>
-            <span class="tag tag-before">ANTES</span>
-            <span class="tag tag-after">DEPOIS</span>
-          </div>
-          <figcaption><span>Sofá de tecido</span><span class="mono">ESTOFADO</span></figcaption>
-        </figure>
-        <figure>
-          <div class="compare-card auto">
-            <div class="layer layer-before"></div>
-            <div class="layer layer-after"></div>
-            <span class="tag tag-before">ANTES</span>
-            <span class="tag tag-after">DEPOIS</span>
-          </div>
-          <figcaption><span>Colchão casal</span><span class="mono">COLCHÃO</span></figcaption>
-        </figure>
-        <figure>
-          <div class="compare-card auto">
-            <div class="layer layer-before"></div>
-            <div class="layer layer-after"></div>
-            <span class="tag tag-before">ANTES</span>
-            <span class="tag tag-after">DEPOIS</span>
-          </div>
-          <figcaption><span>Tapete de sala</span><span class="mono">TAPETE</span></figcaption>
-        </figure>
+  <div class="compare-card auto">
+    <div class="layer layer-before">
+      <img src="1.png" alt="Tapete antes da higienização">
+    </div>
+    <div class="layer layer-after">
+      <img src="2.png" alt="Tapete depois da higienização">
+    </div>
+    <span class="tag tag-before">ANTES</span>
+    <span class="tag tag-after">DEPOIS</span>
+  </div>
+  <figcaption>
+    <span>Tapete de sala</span>
+    <span class="mono">TAPETE</span>
+  </figcaption>
+</figure>
       </div>
     </div>
   </section>
